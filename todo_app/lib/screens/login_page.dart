@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/providers/auth_providers.dart';
+import 'package:todo_app/providers/login_page_providers.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends ConsumerWidget {
+  void updateEmail(BuildContext context, String email) {
+    context.read(emailProvider).state = email;
+  }
+
+  void updatePassword(BuildContext context, String pass) {
+    context.read(passwordProvider).state = pass;
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final email = watch(emailProvider).state;
+    final pass = watch(passwordProvider).state;
+    final _auth = watch(authServicesProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In for your ToDos'),
@@ -19,18 +31,18 @@ class LoginPage extends StatelessWidget {
                 style: TextStyle(fontSize: 24),
               ),
               TextField(
-                onChanged: (val) {},
+                onChanged: (val) => updateEmail(context, val),
                 decoration: InputDecoration(hintText: 'Email'),
               ),
               TextField(
-                onChanged: (val) {},
+                onChanged: (val) => updatePassword(context, val),
                 obscureText: true,
                 decoration: InputDecoration(hintText: 'Password'),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => _auth.signIn(email: email, password: pass),
                   child: Text('Sign In'),
                 ),
               )
