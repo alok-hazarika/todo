@@ -12,7 +12,31 @@ class Homepage extends ConsumerWidget {
         ),
         body: Column(
           children: [
-            Text('Todo homepage'),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Todo homepage',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey[700],
+                ),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text(
+                    'demo text',
+                    style: TextStyle(backgroundColor: Colors.blue[300]),
+                  ),
+                  Text(
+                    'demo text2',
+                    style: TextStyle(backgroundColor: Colors.blue[300]),
+                  ),
+                ],
+              ),
+            ),
             ElevatedButton(
               onPressed: () => _auth.signout(),
               child: Text('Sign out'),
